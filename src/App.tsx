@@ -1,26 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ApolloProvider } from '@apollo/client';
 
-function App() {
+import header from './assets/mike.svg';
+import footer from './assets/rail_cargo.svg';
+
+import './App.css';
+import { createClient } from './apollo';
+import UserListContainer from './components/UserListContainer';
+
+const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <img src={header} alt="logo" />
       </header>
+      <div className="App-content">
+        <UserListContainer/>
+      </div>
+      <footer className="App-footer">
+        <img src={footer} alt="rail cargo austria" />
+      </footer>
     </div>
   );
 }
 
-export default App;
+const AppWrapper = () => {
+  return (
+    <ApolloProvider client={ createClient() }>
+      <App/>
+    </ApolloProvider>
+    )
+}
+
+export default AppWrapper;
