@@ -1,7 +1,8 @@
 import { FC, useState } from "react";
-import { Button, TextField } from '@material-ui/core';
+import {IconButton, TextField} from '@material-ui/core';
 import {ADD_USER_MUTATION, LIST_USERS_QUERY} from '../graphql';
 import {useMutation} from '@apollo/client';
+import {AddCircle} from '@material-ui/icons';
 
 type AddUserProps = {
 };
@@ -35,14 +36,9 @@ export const AddUser: FC<AddUserProps> = () => {
   return (
     <div className="AddUser">
       <TextField label="New User" onChange={onChange} />
-      <Button
-        color="primary"
-        variant="outlined"
-        disabled={!newUser || newUser.length < 3}
-        onClick={onClick}
-      >
-        Add
-      </Button>
+      <IconButton edge="end" aria-label="add" disabled={!newUser || newUser.length < 3}>
+        <AddCircle onClick={onClick} />
+      </IconButton>
     </div>
   );
 };
