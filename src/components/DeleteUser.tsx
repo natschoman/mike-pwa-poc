@@ -6,9 +6,10 @@ import {useMutation} from '@apollo/client';
 
 type DeleteUserProps = {
   id: string;
+  disabled: boolean;
 };
 export const DeleteUser: FC<DeleteUserProps> = props => {
-  const { id } = props;
+  const { id, disabled } = props;
   const [delete_users] = useMutation(DELETE_USER_MUTATION);
 
   async function onClick(e: any) {
@@ -29,7 +30,7 @@ export const DeleteUser: FC<DeleteUserProps> = props => {
   }
 
   return (
-    <IconButton edge="end" aria-label="delete">
+    <IconButton edge="end" aria-label="delete" disabled={disabled}>
       <DeleteIcon onClick={onClick} />
     </IconButton>
   );

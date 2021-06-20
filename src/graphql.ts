@@ -22,11 +22,30 @@ export const ADD_USER_MUTATION = gql`
 `;
 
 export const DELETE_USER_MUTATION = gql`
-  mutation deleteUser($id: uuid) {
+  mutation deleteUser($id: uuid!) {
     delete_users(where: {
         id: {
           _eq: $id
         } 
+      }
+    ) {
+      returning {
+        id
+      }
+    }
+  }
+`;
+
+export const EDIT_USER_MUTATION = gql`
+  mutation editUser($id: uuid!, $name: String!) {
+    update_users(
+      where: {
+        id: {
+          _eq: $id
+        }
+      }
+      _set: {
+        name: $name
       }
     ) {
       returning {
