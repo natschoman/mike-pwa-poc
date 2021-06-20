@@ -1,13 +1,13 @@
 import { FC, useState } from "react";
 import { Button, TextField } from '@material-ui/core';
-import {ADD_USERS_MUTATION, LIST_USERS_QUERY} from '../graphql';
+import {ADD_USER_MUTATION, LIST_USERS_QUERY} from '../graphql';
 import {useMutation} from '@apollo/client';
 
 type AddUserProps = {
 };
-export const AddUser: FC<AddUserProps> = props => {
+export const AddUser: FC<AddUserProps> = () => {
   const [newUser, setNewUser] = useState<string | null>(null);
-  const [insert_users] = useMutation(ADD_USERS_MUTATION);
+  const [insert_users] = useMutation(ADD_USER_MUTATION);
 
   function onChange(e: any) {
     const value = e.target.value;
