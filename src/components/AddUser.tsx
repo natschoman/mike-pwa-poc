@@ -18,10 +18,7 @@ export const AddUser: FC<AddUserProps> = () => {
   const [insert_users] = useMutation(ADD_USER_MUTATION);
 
   function onChange(e: any) {
-    const value = e.target.value;
-    if (value) {
-      setNewUser(value);
-    }
+      setNewUser(e.target.value);
   }
   async function onClick(e: any) {
     e.preventDefault();
@@ -35,14 +32,16 @@ export const AddUser: FC<AddUserProps> = () => {
         },
       ],
     });
+    
     if (errors) {
       console.log('!!', errors);
     }
+    setNewUser('')
   }
 
   return (
     <div className={classes.addUser}>
-      <TextField label="New User" onChange={onChange} fullWidth/>
+      <TextField label="New User" onChange={onChange} fullWidth value={newUser}/>
       <Button disabled={!newUser || newUser.length < 3} variant="contained" color="primary" onClick={onClick} className={classes.addUser}>
         Add User
       </Button>
