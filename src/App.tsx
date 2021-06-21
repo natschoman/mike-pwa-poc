@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
   header: {
     backgroundColor: '#111B42',
   },
+  content: {
+    padding: theme.spacing(2)
+  },
   footer: {
     backgroundColor: '#111B42',
     textAlign: 'center',
@@ -48,7 +51,7 @@ const App = () => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <div className="App-content">
+      <div className={classes.content}>
         <UserListContainer/>
       </div>
       <footer className={classes.footer}>
