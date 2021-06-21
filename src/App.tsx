@@ -5,6 +5,7 @@ import { ApolloClient, ApolloProvider } from "@apollo/client";
 import header from "./assets/mike.svg";
 import footer from "./assets/rail_cargo.svg";
 import WifiOffIcon from '@material-ui/icons/WifiOff';
+import WifiIcon from '@material-ui/icons/Wifi';
 
 import UserListContainer from "./components/UserListContainer";
 import {
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   toolbar: {
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
   header: {
     backgroundColor: "#111B42",
@@ -112,11 +113,12 @@ function App() {
       <AppBar position="sticky" className={classes.header}>
         <Toolbar className={classes.toolbar}>
           <Offline><WifiOffIcon style={{marginRight: '10'}}/></Offline>
+          <Online><WifiIcon style={{marginRight: '10'}}/></Online>
           <IconButton edge="start" color="inherit" aria-label="menu">
             <img src={header} alt="logo" />
           </IconButton>
-          <Typography>{version}</Typography>
-          <Typography>TEST DEPLOYMENT 2</Typography>
+          <Typography>{`v ${version}`}</Typography>
+          
         </Toolbar>
       </AppBar>
       {installable && (
