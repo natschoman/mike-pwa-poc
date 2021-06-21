@@ -3,6 +3,8 @@ import { ApolloClient, ApolloProvider } from "@apollo/client";
 
 import header from "./assets/mike.svg";
 import footer from "./assets/rail_cargo.svg";
+import WifiIcon from '@material-ui/icons/Wifi';
+import WifiOffIcon from '@material-ui/icons/WifiOff';
 
 import UserListContainer from "./components/UserListContainer";
 import {
@@ -95,6 +97,7 @@ function App() {
   const classes = useStyles();
   
   const [version, setVersion] = React.useState<string>('');
+  const [online, setOnline] = React.useState<boolean>(window.navigator.onLine);
 
   useEffect(() => {
     const fetchVersion = async () => {
@@ -104,14 +107,21 @@ function App() {
     fetchVersion();
   }, []);
 
+  useEffect(() => {
+    // TODO: ping server here
+    setOnline(window.navigator.onLine);
+  }, [window.navigator.onLine]);
+
   return (
     <div className={classes.root}>
       <AppBar position="sticky" className={classes.header}>
         <Toolbar className={classes.toolbar}>
+          {!online && <WifiOffIcon style={{marginRight: '10'}}/>}
           <IconButton edge="start" color="inherit" aria-label="menu">
             <img src={header} alt="logo" />
           </IconButton>
           <Typography>{version}</Typography>
+          <Typography>TEST DEPLOYMENT 2</Typography>
         </Toolbar>
       </AppBar>
       {installable && (
