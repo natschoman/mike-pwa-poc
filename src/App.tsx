@@ -1,32 +1,70 @@
-import React from 'react';
-import { ApolloProvider } from '@apollo/client';
+import React, { FC } from 'react';
+import { ApolloClient, ApolloProvider } from '@apollo/client';
 
 import header from './assets/mike.svg';
 import footer from './assets/rail_cargo.svg';
 
-import './App.css';
-import { createClient } from './apollo';
 import UserListContainer from './components/UserListContainer';
+import { AppBar, IconButton, makeStyles, Toolbar } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    paddingBottom: '10vh'
+  },
+  title: {
+    flexGrow: 1,
+  },
+  toolbar: {
+    justifyContent: 'center',
+  },
+  header: {
+    backgroundColor: '#111B42',
+  },
+  content: {
+    padding: theme.spacing(2)
+  },
+  footer: {
+    backgroundColor: '#111B42',
+    textAlign: 'center',
+    lineHeight: '10vh',
+    position: 'fixed',
+    left: 0,
+    bottom: 0,
+    width: '100%'
+  }
+}));
+
+interface Props {
+  client: ApolloClient<any>;
+}
 
 const App = () => {
+
+  const classes = useStyles();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={header} alt="logo" />
-      </header>
-      <div className="App-content">
+    <div className={classes.root}>
+      <AppBar position="sticky" className={classes.header}>
+        <Toolbar className={classes.toolbar}>
+          <IconButton edge="start" color="inherit" aria-label="menu">
+          <img src={header} alt="logo" />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <div className={classes.content}>
         <UserListContainer/>
       </div>
-      <footer className="App-footer">
+      <footer className={classes.footer}>
         <img src={footer} alt="rail cargo austria" />
       </footer>
     </div>
   );
 }
 
-const AppWrapper = () => {
+const AppWrapper: FC<Props> = ({client}) => {
+  
   return (
-    <ApolloProvider client={ createClient() }>
+    <ApolloProvider client={client}>
       <App/>
     </ApolloProvider>
     )

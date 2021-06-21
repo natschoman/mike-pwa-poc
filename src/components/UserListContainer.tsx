@@ -1,32 +1,23 @@
-import { gql, useQuery } from '@apollo/client';
-
+import { useQuery } from '@apollo/client';
 import { User } from '../models/User';
 import UserList from './UserList';
-import './UserListContainer.css';
-
-const USERS_QUERY = gql`
-    query users {
-        users {
-            id
-            name
-            rocket
-        }
-    }
-`;
+import { AddUser } from './AddUser';
+import { LIST_USERS_QUERY } from '../graphql';
 
 const UserListContainer = () => {
-  const { loading, error, data } = useQuery<any>(USERS_QUERY);
+  const { loading, error, data } = useQuery<any>(LIST_USERS_QUERY);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="UserListContainer">Loading...</div>;
   }
 
   if (error) {
-    return <div>{error?.message}</div>;
+    return <div className="UserListContainer">{error?.message}</div>;
   }
 
   return (
     <div className="UserListContainer">
+      <AddUser />
       <UserList users={data.users as User[]} />
     </div>
   );

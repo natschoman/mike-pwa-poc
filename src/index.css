@@ -11,3 +11,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.UserListContainer {
+  margin: 0 auto;
+  min-width: 300px;
+  max-width: 800px;
+}
+
+.AddUser {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
