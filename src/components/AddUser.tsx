@@ -1,13 +1,12 @@
 import { FC, useState } from "react";
-import {IconButton, makeStyles, TextField} from '@material-ui/core';
+import {Button, makeStyles, TextField} from '@material-ui/core';
 import {ADD_USER_MUTATION, LIST_USERS_QUERY} from '../graphql';
 import {useMutation} from '@apollo/client';
 import {AddCircle} from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   addUser: {
-    padding: theme.spacing(2),
-    paddingLeft: 0
+    marginTop: theme.spacing(1),
   }
 }));
 
@@ -44,10 +43,10 @@ export const AddUser: FC<AddUserProps> = () => {
 
   return (
     <div className={classes.addUser}>
-      <TextField label="New User" onChange={onChange} />
-      <IconButton edge="end" aria-label="add" disabled={!newUser || newUser.length < 3}>
-        <AddCircle onClick={onClick} />
-      </IconButton>
+      <TextField label="New User" onChange={onChange} fullWidth/>
+      <Button disabled={!newUser || newUser.length < 3} variant="contained" color="primary" onClick={onClick} className={classes.addUser}>
+        Add User
+      </Button>
     </div>
   );
 };

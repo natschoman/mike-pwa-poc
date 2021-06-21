@@ -5,7 +5,7 @@ import header from './assets/mike.svg';
 import footer from './assets/rail_cargo.svg';
 
 import UserListContainer from './components/UserListContainer';
-import { AppBar, IconButton, makeStyles, Toolbar } from '@material-ui/core';
+import { AppBar, IconButton, makeStyles, Toolbar, Container } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,9 +51,9 @@ const App = () => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <div className={classes.content}>
+      <Container className={classes.content}>
         <UserListContainer/>
-      </div>
+      </Container>
       <footer className={classes.footer}>
         <img src={footer} alt="rail cargo austria" />
       </footer>
