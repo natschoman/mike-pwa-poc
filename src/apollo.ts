@@ -1,22 +1,33 @@
-import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
+import {
+  ApolloClient,
+  InMemoryCache,
+  NormalizedCacheObject
+} from "@apollo/client";
+import { CachePersistor } from "apollo-cache-persist";
+import { PersistentStorage, PersistedData } from "apollo-cache-persist/types";
 
-let client: ApolloClient<any>;
+const API_HOST = 'https://api.spacex.land/graphql/'
+const SCHEMA_VERSION = '1'
+const SCHEMA_VERSION_KEY = 'apollo-schema-version'
 
-export const createClient = (): ApolloClient<any> => {
-  const httpLink = createHttpLink({
-    uri: 'https://api.spacex.land/graphql/'
-  });
+const getApolloClient = async () => {
+const cache = new InMemoryCache()
 
-  client = new ApolloClient({
-    link: httpLink,
-    cache: new InMemoryCache()
-  });
+const persistor = new CachePersistor({
+  cache,
+  storage: window.localStorage as PersistentStorage<PersistedData<NormalizedCacheObject>>,
+})
 
-  return client;
-};
+const currentVersion = window.localStorage.getItem(SCHEMA_VERSION_KEY)
 
-export const clearCache = async () => {
-  if (client) {
-    await client.clearStore();
-  }
-};
+if (currentVersion === SCHEMA_VERSION) {
+  await persistor.restore()
+} else {
+  await persistor.purge()
+  window.localStorage.setItem(SCHEMA_VERSION_KEY, SCHEMA_VERSION)
+}
+
+return new ApolloClient({ uri: API_HOST, cache })
+}
+
+export default getApolloClient;

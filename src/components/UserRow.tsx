@@ -1,17 +1,15 @@
 import { User } from '../models/User';
 import {FC, useState} from 'react';
 import {
-  Avatar,
   IconButton,
-  ListItem,
-  ListItemAvatar,
-  ListItemSecondaryAction,
   ListItemText,
-  TextField
+  TextField,
+  Card,
+  CardHeader,
 } from '@material-ui/core';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {DeleteUser} from './DeleteUser';
-import {AddCircle, Clear, Edit as EditIcon} from '@material-ui/icons';
+import {AddCircle, Clear, Edit as EditIcon } from '@material-ui/icons';
+import SaveIcon from '@material-ui/icons/Save';
 import {EDIT_USER_MUTATION, LIST_USERS_QUERY} from '../graphql';
 import {useMutation} from '@apollo/client';
 
@@ -91,7 +89,7 @@ const Edit: FC<EditProps> = props => {
   return (
     <>
       <IconButton edge="end" aria-label="add" disabled={editedName.length < 3} onClick={onAddClick}>
-        <AddCircle />
+        <SaveIcon />
       </IconButton>
       <IconButton edge="end" aria-label="clear" onClick={onClearClick}>
         <Clear />
@@ -107,20 +105,23 @@ const UserRow: FC<UserRowProps> = props => {
   const { id, name } = props.user;
   const [editInProgress, setEditInProgress] = useState<boolean>(false);
   const [editedName, setEditedName] = useState<string>(name)
+
   return (
-    <ListItem>
-      <ListItemAvatar>
-        <Avatar>
-          <AccountCircleIcon />
-        </Avatar>
-      </ListItemAvatar>
-      <Item editInProgress={editInProgress} editedName={editedName} setEditedName={setEditedName} />
-      <ListItemSecondaryAction>
-        <StartEdit editInProgress={editInProgress} setEditInProgress={setEditInProgress} />
-        <Edit editInProgress={editInProgress} editedName={editedName} setEditInProgress={setEditInProgress} originalName={name} setEditedName={setEditedName} id={id} />
-        <DeleteUser id={id} disabled={editInProgress} />
-      </ListItemSecondaryAction>
-    </ListItem>
+    <>
+    <Card>
+    <CardHeader
+    title={ 
+      <Item editInProgress={editInProgress} editedName={editedName} setEditedName={setEditedName} />}
+    action={
+      <>
+    <StartEdit editInProgress={editInProgress} setEditInProgress={setEditInProgress} />
+    <Edit editInProgress={editInProgress} editedName={editedName} setEditInProgress={setEditInProgress} originalName={name} setEditedName={setEditedName} id={id} />
+    <DeleteUser id={id} disabled={editInProgress} />
+      </>
+    }
+   />
+    </Card>
+    </>
   );
 };
 
