@@ -37,10 +37,7 @@ type ItemProps = {
 const Item: FC<ItemProps> = props => {
   const { editInProgress, editedName, setEditedName } = props;
   function onChange(e: any) {
-    const value = e.target.value;
-    if (value) {
-      setEditedName(value);
-    }
+      setEditedName(e.target.value);
   }
   if (editInProgress) {
     return <TextField value={editedName} onChange={onChange} autoFocus />
