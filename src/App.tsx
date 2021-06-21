@@ -3,7 +3,6 @@ import { ApolloClient, ApolloProvider } from "@apollo/client";
 
 import header from "./assets/mike.svg";
 import footer from "./assets/rail_cargo.svg";
-import WifiIcon from '@material-ui/icons/Wifi';
 import WifiOffIcon from '@material-ui/icons/WifiOff';
 
 import UserListContainer from "./components/UserListContainer";
