@@ -38,6 +38,14 @@ const useStyles = makeStyles((theme) => ({
   content: {
     padding: theme.spacing(2),
   },
+  logo: {
+    display: 'flex',
+    flexDirection: 'column',
+    paddingBottom: theme.spacing(1)
+  },
+  version: {
+    marginTop: -10,
+  },
   install: {
     padding: `${theme.spacing(2)}px 0`,
     margin: "0 auto",
@@ -113,13 +121,14 @@ function App() {
     <div className={classes.root}>
       <AppBar position="sticky" className={classes.header}>
         <Toolbar className={classes.toolbar}>
+          <div className={classes.logo}>
+            <IconButton edge="start" color="inherit" aria-label="menu">
+              <img src={header} alt="logo" />
+            </IconButton>
+            <Typography variant='body2' className={classes.version}>{`v ${version}`}</Typography>
+          </div>
           <Offline><WifiOffIcon style={{marginRight: '10'}}/></Offline>
           <Online><WifiIcon style={{marginRight: '10'}}/></Online>
-          <IconButton edge="start" color="inherit" aria-label="menu">
-            <img src={header} alt="logo" />
-          </IconButton>
-          <Typography>{`v ${version}`}</Typography>
-
         </Toolbar>
       </AppBar>
       {installable && (
