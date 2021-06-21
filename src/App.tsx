@@ -3,7 +3,6 @@ import { ApolloClient, ApolloProvider } from "@apollo/client";
 
 import header from "./assets/mike.svg";
 import footer from "./assets/rail_cargo.svg";
-import WifiOffIcon from '@material-ui/icons/WifiOff';
 
 import UserListContainer from "./components/UserListContainer";
 import {
@@ -106,16 +105,10 @@ function App() {
     fetchVersion();
   }, []);
 
-  useEffect(() => {
-    // TODO: ping server here
-    setOnline(window.navigator.onLine);
-  }, [window.navigator.onLine]);
-
   return (
     <div className={classes.root}>
       <AppBar position="sticky" className={classes.header}>
         <Toolbar className={classes.toolbar}>
-          {!online && <WifiOffIcon style={{marginRight: '10'}}/>}
           <IconButton edge="start" color="inherit" aria-label="menu">
             <img src={header} alt="logo" />
           </IconButton>
