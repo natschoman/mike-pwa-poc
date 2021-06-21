@@ -5,6 +5,7 @@ import ApolloWrapper from "./ApolloWrapper";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 
+
 ReactDOM.render(
   <React.StrictMode>
     <ApolloWrapper />

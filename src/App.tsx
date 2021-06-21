@@ -6,6 +6,7 @@ import footer from './assets/rail_cargo.svg';
 
 import UserListContainer from './components/UserListContainer';
 import { AppBar, IconButton, makeStyles, Toolbar, Container } from '@material-ui/core';
+import ServiceWorkerWrapper from './ServiceWorkerWrapper';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,6 +67,7 @@ const AppWrapper: FC<Props> = ({client}) => {
   return (
     <ApolloProvider client={client}>
       <App/>
+      <ServiceWorkerWrapper />
     </ApolloProvider>
     )
 }
