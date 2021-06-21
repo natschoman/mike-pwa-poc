@@ -1,19 +1,18 @@
 import { useContext, useEffect, useRef } from 'react';
-import { useApolloClient } from '@apollo/client';
 
 import { Context as OfflineContext } from './context/OfflineContext';
 import { OfflineMutation, OfflineMutationType } from './models/OfflineMutation';
-import { ADD_USER_MUTATION } from './graphql';
+import { useUserMutation } from './hooks/useUserMutations';
 
 const MutationReplayService = () => {
-
-  const client = useApolloClient();
 
   const {
     state: { mutations },
     loadMutations,
     removeMutation,
   } = useContext(OfflineContext) as any;
+
+  const { createUser } = useUserMutation();
 
   // to avoid loop
   const processingMutations = useRef(false);
@@ -24,6 +23,7 @@ const MutationReplayService = () => {
     };
 
     loadOfflineContext();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -32,10 +32,7 @@ const MutationReplayService = () => {
 
       switch (mutation.type) {
         case OfflineMutationType.CREATE_USER:
-          await client.mutate({
-            mutation: ADD_USER_MUTATION,
-            variables: mutation.variables,
-          });
+          await createUser(mutation.variables);
           break;
         case OfflineMutationType.UPDATE_USER:
           // TODO:
@@ -65,6 +62,7 @@ const MutationReplayService = () => {
 
       fireMutations();
     }
+    // eslint-disable-next-line
   }, [mutations]);
 
   return null;
