@@ -1,6 +1,51 @@
-import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import React, { FC, useEffect, useState } from "react";
+import { ApolloClient, ApolloProvider } from "@apollo/client";
+
+import header from "./assets/mike.svg";
+import footer from "./assets/rail_cargo.svg";
+
+import UserListContainer from "./components/UserListContainer";
+import {
+  AppBar,
+  IconButton,
+  Button,
+  makeStyles,
+  Toolbar,
+  Container,
+} from "@material-ui/core";
+import ServiceWorkerWrapper from "./ServiceWorkerWrapper";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    paddingBottom: "10vh",
+  },
+  title: {
+    flexGrow: 1,
+  },
+  toolbar: {
+    justifyContent: "center",
+  },
+  header: {
+    backgroundColor: "#111B42",
+  },
+  content: {
+    padding: theme.spacing(2),
+  },
+  footer: {
+    backgroundColor: "#111B42",
+    textAlign: "center",
+    lineHeight: "10vh",
+    position: "fixed",
+    left: 0,
+    bottom: 0,
+    width: "100%",
+  },
+}));
+
+interface Props {
+  client: ApolloClient<any>;
+}
 
 let deferredPrompt: any;
 
@@ -38,30 +83,33 @@ function App() {
     });
   };
 
+  const classes = useStyles();
   return (
-    <div className="App">
-      {installable && (
-        <button className="install-button" onClick={handleInstallClick}>
-          INSTALL ME
-        </button>
-      )}
-
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={classes.root}>
+      <AppBar position="sticky" className={classes.header}>
+        <Toolbar className={classes.toolbar}>
+          <IconButton edge="start" color="inherit" aria-label="menu">
+            <img src={header} alt="logo" />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <Container className={classes.content}>
+        <UserListContainer />
+      </Container>
+      <footer className={classes.footer}>
+        <img src={footer} alt="rail cargo austria" />
+      </footer>
     </div>
   );
 }
 
-export default App;
+const AppWrapper: FC<Props> = ({ client }) => {
+  return (
+    <ApolloProvider client={client}>
+      <App />
+      <ServiceWorkerWrapper />
+    </ApolloProvider>
+  );
+};
+
+export default AppWrapper;
