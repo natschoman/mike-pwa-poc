@@ -1,7 +1,11 @@
-import { FC, useState } from "react";
+import { FC, useContext, useState } from 'react';
 import {Button, makeStyles, TextField} from '@material-ui/core';
-import {ADD_USER_MUTATION, LIST_USERS_QUERY} from '../graphql';
 import {useMutation} from '@apollo/client';
+import { v4 as uuidv4 } from 'uuid';
+
+import {ADD_USER_MUTATION, LIST_USERS_QUERY} from '../graphql';
+import { Context as OfflineContext } from '../context/OfflineContext';
+import { OfflineMutationType } from '../models/OfflineMutation';
 
 const useStyles = makeStyles((theme) => ({
   addUser: {
@@ -17,26 +21,40 @@ export const AddUser: FC<AddUserProps> = () => {
   const [newUser, setNewUser] = useState<string | null>(null);
   const [insert_users] = useMutation(ADD_USER_MUTATION);
 
+  const { addMutation } = useContext(OfflineContext) as any;
+
   function onChange(e: any) {
       setNewUser(e.target.value);
   }
   async function onClick(e: any) {
     e.preventDefault();
-    const { errors } = await insert_users({
-      variables: {
-        name: newUser,
-      },
-      refetchQueries: () => [
-        {
-          query: LIST_USERS_QUERY,
+
+    try {
+      const { errors } = await insert_users({
+        variables: {
+          name: newUser,
         },
-      ],
-    });
-    
-    if (errors) {
-      console.log('!!', errors);
+        refetchQueries: () => [
+          {
+            query: LIST_USERS_QUERY,
+          },
+        ],
+      });
+
+      if (errors) {
+        console.log('!!', errors);
+      }
+    } catch (err) {
+      if (!navigator.onLine) {
+        addMutation({
+          id: uuidv4(),
+          type: OfflineMutationType.CREATE_USER,
+          variables: { name: newUser },
+        });
+      }
     }
-    setNewUser('')
+
+    setNewUser('');
   }
 
   return (

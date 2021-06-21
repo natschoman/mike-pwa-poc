@@ -1,11 +1,12 @@
 import React, { FC, useEffect, useState } from "react";
 import { Online, Offline } from 'react-detect-offline';
 import { ApolloClient, ApolloProvider } from "@apollo/client";
+import WifiOffIcon from '@material-ui/icons/WifiOff';
 
 import header from "./assets/mike.svg";
 import footer from "./assets/rail_cargo.svg";
-import WifiOffIcon from '@material-ui/icons/WifiOff';
 
+import { Provider as OfflineProvider } from './context/OfflineContext';
 import UserListContainer from "./components/UserListContainer";
 import {
   AppBar,
@@ -116,7 +117,6 @@ function App() {
             <img src={header} alt="logo" />
           </IconButton>
           <Typography>{version}</Typography>
-          <Typography>TEST DEPLOYMENT 2</Typography>
         </Toolbar>
       </AppBar>
       {installable && (
@@ -142,13 +142,15 @@ function App() {
 
 const AppWrapper: FC<Props> = ({ client }) => {
   return (
-    <ApolloProvider client={client}>
-      <App />
-      <ServiceWorkerWrapper />
-      <Online>
-        <MutationReplayService />
-      </Online>
-    </ApolloProvider>
+    <OfflineProvider>
+      <ApolloProvider client={client}>
+        <App />
+        <ServiceWorkerWrapper />
+        <Online>
+          <MutationReplayService />
+        </Online>
+      </ApolloProvider>
+    </OfflineProvider>
   );
 };
 
