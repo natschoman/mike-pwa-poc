@@ -32,6 +32,14 @@ const useStyles = makeStyles((theme) => ({
   content: {
     padding: theme.spacing(2),
   },
+  install: {
+    padding: `${theme.spacing(2)}px 0`,
+    margin: "0 auto",
+    minWidth: 300,
+    maxWidth: 800,
+    display: "flex",
+    flexDirection: "row-reverse",
+  },
   footer: {
     backgroundColor: "#111B42",
     textAlign: "center",
@@ -93,6 +101,17 @@ function App() {
           </IconButton>
         </Toolbar>
       </AppBar>
+      {installable && (
+        <Container className={classes.install}>
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={handleInstallClick}
+          >
+            Install App
+          </Button>
+        </Container>
+      )}
       <Container className={classes.content}>
         <UserListContainer />
       </Container>
