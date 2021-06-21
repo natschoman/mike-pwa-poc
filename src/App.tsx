@@ -12,6 +12,7 @@ import {
   makeStyles,
   Toolbar,
   Container,
+  Typography,
 } from "@material-ui/core";
 import ServiceWorkerWrapper from "./ServiceWorkerWrapper";
 
@@ -92,6 +93,17 @@ function App() {
   };
 
   const classes = useStyles();
+  
+  const [version, setVersion] = React.useState<string>('');
+
+  useEffect(() => {
+    const fetchVersion = async () => {
+      const { version } = await (await fetch('version.json')).json();
+      setVersion(version);
+    }
+    fetchVersion();
+  }, []);
+
   return (
     <div className={classes.root}>
       <AppBar position="sticky" className={classes.header}>
@@ -99,6 +111,7 @@ function App() {
           <IconButton edge="start" color="inherit" aria-label="menu">
             <img src={header} alt="logo" />
           </IconButton>
+          <Typography>{version}</Typography>
         </Toolbar>
       </AppBar>
       {installable && (
