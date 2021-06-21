@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import {DeleteUser} from './DeleteUser';
 import {AddCircle, Clear, Edit as EditIcon } from '@material-ui/icons';
+import SaveIcon from '@material-ui/icons/Save';
 import {EDIT_USER_MUTATION, LIST_USERS_QUERY} from '../graphql';
 import {useMutation} from '@apollo/client';
 
@@ -88,7 +89,7 @@ const Edit: FC<EditProps> = props => {
   return (
     <>
       <IconButton edge="end" aria-label="add" disabled={editedName.length < 3} onClick={onAddClick}>
-        <AddCircle />
+        <SaveIcon />
       </IconButton>
       <IconButton edge="end" aria-label="clear" onClick={onClearClick}>
         <Clear />
@@ -113,7 +114,7 @@ const UserRow: FC<UserRowProps> = props => {
       <Item editInProgress={editInProgress} editedName={editedName} setEditedName={setEditedName} />}
     action={
       <>
-        <StartEdit editInProgress={editInProgress} setEditInProgress={setEditInProgress} />
+    <StartEdit editInProgress={editInProgress} setEditInProgress={setEditInProgress} />
     <Edit editInProgress={editInProgress} editedName={editedName} setEditInProgress={setEditInProgress} originalName={name} setEditedName={setEditedName} id={id} />
     <DeleteUser id={id} disabled={editInProgress} />
       </>
