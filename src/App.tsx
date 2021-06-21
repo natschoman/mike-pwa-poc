@@ -1,8 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
+import { Online, Offline } from 'react-detect-offline';
 import { ApolloClient, ApolloProvider } from "@apollo/client";
 
 import header from "./assets/mike.svg";
 import footer from "./assets/rail_cargo.svg";
+import WifiOffIcon from '@material-ui/icons/WifiOff';
 
 import UserListContainer from "./components/UserListContainer";
 import {
@@ -15,6 +17,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import ServiceWorkerWrapper from "./ServiceWorkerWrapper";
+import MutationReplayService from './MutationReplayService';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -108,6 +111,7 @@ function App() {
     <div className={classes.root}>
       <AppBar position="sticky" className={classes.header}>
         <Toolbar className={classes.toolbar}>
+          <Offline><WifiOffIcon style={{marginRight: '10'}}/></Offline>
           <IconButton edge="start" color="inherit" aria-label="menu">
             <img src={header} alt="logo" />
           </IconButton>
@@ -141,6 +145,9 @@ const AppWrapper: FC<Props> = ({ client }) => {
     <ApolloProvider client={client}>
       <App />
       <ServiceWorkerWrapper />
+      <Online>
+        <MutationReplayService />
+      </Online>
     </ApolloProvider>
   );
 };
