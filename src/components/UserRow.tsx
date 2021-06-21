@@ -113,7 +113,7 @@ const UserRow: FC<UserRowProps> = props => {
       <>
     <StartEdit editInProgress={editInProgress} setEditInProgress={setEditInProgress} />
     <Edit editInProgress={editInProgress} editedName={editedName} setEditInProgress={setEditInProgress} originalName={name} setEditedName={setEditedName} id={id} />
-    <DeleteUser id={id} disabled={editInProgress} />
+    <DeleteUser id={id} disabled={editInProgress} name={name} />
       </>
     }
    />
