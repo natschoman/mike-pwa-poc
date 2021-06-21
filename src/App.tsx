@@ -95,7 +95,6 @@ function App() {
   const classes = useStyles();
   
   const [version, setVersion] = React.useState<string>('');
-  const [online, setOnline] = React.useState<boolean>(window.navigator.onLine);
 
   useEffect(() => {
     const fetchVersion = async () => {
