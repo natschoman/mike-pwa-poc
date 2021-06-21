@@ -7,6 +7,7 @@ import footer from "./assets/rail_cargo.svg";
 import WifiOffIcon from '@material-ui/icons/WifiOff';
 import WifiIcon from '@material-ui/icons/Wifi';
 
+import { Provider as OfflineProvider } from './context/OfflineContext';
 import UserListContainer from "./components/UserListContainer";
 import {
   AppBar,
@@ -153,13 +154,15 @@ function App() {
 
 const AppWrapper: FC<Props> = ({ client }) => {
   return (
-    <ApolloProvider client={client}>
-      <App />
-      <ServiceWorkerWrapper />
-      <Online>
-        <MutationReplayService />
-      </Online>
-    </ApolloProvider>
+    <OfflineProvider>
+      <ApolloProvider client={client}>
+        <App />
+        <ServiceWorkerWrapper />
+        <Online>
+          <MutationReplayService />
+        </Online>
+      </ApolloProvider>
+    </OfflineProvider>
   );
 };
 
