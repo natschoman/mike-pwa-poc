@@ -14,7 +14,7 @@ type AddUserProps = {
 export const AddUser: FC<AddUserProps> = () => {
 
   const classes = useStyles();
-  const [newUser, setNewUser] = useState<string | null>(null);
+  const [newUser, setNewUser] = useState<string>('');
   const [insert_users] = useMutation(ADD_USER_MUTATION);
 
   function onChange(e: any) {

@@ -1,5 +1,6 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { ApolloClient, ApolloProvider } from '@apollo/client';
+import WifiIcon from '@material-ui/icons/Wifi';
 
 import header from './assets/mike.svg';
 import footer from './assets/rail_cargo.svg';
@@ -17,13 +18,19 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   toolbar: {
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
   header: {
     backgroundColor: '#111B42',
   },
   content: {
     padding: theme.spacing(2)
+  },
+  online: {
+    color: '#B3E283'
+  },
+  offline: {
+    color: 'red'
   },
   footer: {
     backgroundColor: '#111B42',
@@ -42,6 +49,13 @@ interface Props {
 
 const App = () => {
 
+  const[isOnline, setIsOnline] = useState(true)
+  
+  useEffect(() => {
+    window.addEventListener('offline', () => setIsOnline(false));
+    window.addEventListener('online', () => setIsOnline(true));
+  })
+
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -50,6 +64,7 @@ const App = () => {
           <IconButton edge="start" color="inherit" aria-label="menu">
           <img src={header} alt="logo" />
           </IconButton>
+          <WifiIcon className={isOnline ? classes.online : classes.offline} />
         </Toolbar>
       </AppBar>
       <Container className={classes.content}>
