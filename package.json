@@ -1,6 +1,6 @@
 {
   "name": "mike-pwa-poc",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "dependencies": {
     "@apollo/client": "3.3.11",
@@ -42,7 +42,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm version patch --force"
+      "pre-push": "npm version patch --force && node ./write-version.js"
     }
   },
   "scripts": {
