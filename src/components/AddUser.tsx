@@ -2,7 +2,6 @@ import { FC, useState } from "react";
 import {Button, makeStyles, TextField} from '@material-ui/core';
 import {ADD_USER_MUTATION, LIST_USERS_QUERY} from '../graphql';
 import {useMutation} from '@apollo/client';
-import {AddCircle} from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   addUser: {

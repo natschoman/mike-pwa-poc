@@ -8,7 +8,7 @@ import {
   CardHeader,
 } from '@material-ui/core';
 import {DeleteUser} from './DeleteUser';
-import {AddCircle, Clear, Edit as EditIcon } from '@material-ui/icons';
+import { Clear, Edit as EditIcon } from '@material-ui/icons';
 import SaveIcon from '@material-ui/icons/Save';
 import {EDIT_USER_MUTATION, LIST_USERS_QUERY} from '../graphql';
 import {useMutation} from '@apollo/client';

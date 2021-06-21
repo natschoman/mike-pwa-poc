@@ -1,6 +1,6 @@
 import { orderBy, cloneDeep } from 'lodash';
 import { FC } from 'react';
-import { Divider, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Grid, makeStyles, Typography } from '@material-ui/core';
 
 import { User } from '../models/User';
 import UserRow from './UserRow';
