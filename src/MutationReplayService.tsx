@@ -3,6 +3,7 @@ import { useContext, useEffect, useRef } from 'react';
 import { Context as OfflineContext } from './context/OfflineContext';
 import { OfflineMutation, OfflineMutationType } from './models/OfflineMutation';
 import { useUserMutation } from './hooks/useUserMutations';
+import { useUserQueries } from './hooks/useUserQueries';
 
 const MutationReplayService = () => {
 
@@ -13,6 +14,7 @@ const MutationReplayService = () => {
   } = useContext(OfflineContext) as any;
 
   const { createUser } = useUserMutation();
+  const { loadUsers } = useUserQueries();
 
   // to avoid loop
   const processingMutations = useRef(false);
@@ -28,8 +30,6 @@ const MutationReplayService = () => {
 
   useEffect(() => {
     const fireMutation = async (mutation: OfflineMutation) => {
-      console.log('MUTATION: ', mutation);
-
       switch (mutation.type) {
         case OfflineMutationType.CREATE_USER:
           await createUser(mutation.variables);
@@ -54,8 +54,7 @@ const MutationReplayService = () => {
         }
         // refresh list after 1s
         setTimeout(() => {
-          // TODO: refresh list
-          // refreshMutation();
+          loadUsers();
           processingMutations.current = false;
         }, 1000);
       };

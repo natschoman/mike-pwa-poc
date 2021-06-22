@@ -13,27 +13,23 @@ export const useUserMutation = () => {
 
   const createUser = async (mutationVars: any) => {
     try {
-    const { errors } = await createUserMutation({
-      variables: mutationVars,
-      refetchQueries: () => [
-        {
-          query: LIST_USERS_QUERY,
-        },
-      ],
-    });
-
-    if (errors) {
-      console.log('!!', errors);
-    }
-  } catch (err) {
-    if (!navigator.onLine) {
-      addMutation({
-        id: uuidv4(),
-        type: OfflineMutationType.CREATE_USER,
+      await createUserMutation({
         variables: mutationVars,
+        refetchQueries: () => [
+          {
+            query: LIST_USERS_QUERY,
+          },
+        ],
       });
+    } catch (err) {
+      if (!navigator.onLine) {
+        addMutation({
+          id: uuidv4(),
+          type: OfflineMutationType.CREATE_USER,
+          variables: mutationVars,
+        });
+      }
     }
-  }
   };
 
   return {
