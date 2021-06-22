@@ -10,8 +10,7 @@ import {
 import {DeleteUser} from './DeleteUser';
 import { Clear, Edit as EditIcon } from '@material-ui/icons';
 import SaveIcon from '@material-ui/icons/Save';
-import {EDIT_USER_MUTATION, LIST_USERS_QUERY} from '../graphql';
-import {useMutation} from '@apollo/client';
+import { useUserMutation } from "../hooks/useUserMutations";
 
 type StartEditProps = {
   editInProgress: boolean;
@@ -55,7 +54,7 @@ type EditProps = {
 };
 const Edit: FC<EditProps> = props => {
   const { editInProgress, editedName, setEditInProgress, originalName, setEditedName, id } = props;
-  const [update_users] = useMutation(EDIT_USER_MUTATION);
+  const { updateUser } = useUserMutation();
   if (!editInProgress) {
     return null;
   }
@@ -67,21 +66,11 @@ const Edit: FC<EditProps> = props => {
   }
   async function onAddClick(e: any) {
     e.preventDefault();
-    const { errors } = await update_users({
-      variables: {
-        name: editedName,
-        id,
-      },
-      refetchQueries: () => [
-        {
-          query: LIST_USERS_QUERY,
-        },
-      ],
-    });
+    updateUser({
+      name: editedName,
+      id,
+    })
     setEditInProgress(false);
-    if (errors) {
-      console.log('!!', errors);
-    }
   }
   return (
     <>
