@@ -13,7 +13,7 @@ const MutationReplayService = () => {
     removeMutation,
   } = useContext(OfflineContext) as any;
 
-  const { createUser } = useUserMutation();
+  const { createUser, updateUser, deleteUser } = useUserMutation();
   const { loadUsers } = useUserQueries();
 
   // to avoid loop
@@ -35,10 +35,10 @@ const MutationReplayService = () => {
           await createUser(mutation.variables);
           break;
         case OfflineMutationType.UPDATE_USER:
-          // TODO:
+          await updateUser(mutation.variables);
           break;
         case OfflineMutationType.DELETE_USER:
-          // TODO:
+          await deleteUser(mutation.variables);
           break;
       }
     };
